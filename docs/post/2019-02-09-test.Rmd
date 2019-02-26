@@ -1,0 +1,55 @@
+---
+title: "Test_blog post"
+author: "Chky_S"
+date: "February 9, 2019"
+categories: ["Test"]
+tags: ["Test", "plot"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+# 実験
+## 色々やってみる。
+
+
+正弦曲線も書けるし、
+
+
+```{r include=FALSE}
+x <- seq(-15,15,0.1)
+y <- sin(x)
+curve(expr = sin, seq(-15, 15, 0.1),
+      col = "blue") 
+
+?curve
+```
+
+為替レートもわかる！
+
+```{r include = FALSE}
+library(tidyverse)
+library(Quandl)
+library(scales)
+library(ggthemes)
+
+Quandl.api_key("gzkzvD1fJ-xxdb3UBD4V")
+JPY_USD <- as.tibble(Quandl::Quandl(code = "BOE/XUDLJYD"))
+
+JPY_USD %>%
+  filter(Date > Sys.Date() - 180) %>%
+  ggplot(aes(x = Date, y = Value)) +
+  geom_line(color = "blue") +
+  labs(title = "USD/JPY",
+       x = NULL,
+       y = NULL
+  )+
+  scale_x_date(labels = date_format("%m-%d,%Y"))+
+  scale_color_hc()+
+  theme_hc()
+
+```
+
+
+
